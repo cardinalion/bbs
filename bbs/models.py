@@ -6,7 +6,7 @@ from bbs.extensions import db
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20))
-    password_hash = db.Column(db.String(128))
+    password_hash = db.Column(db.String(32))
     motto = db.Column(db.Text)
 
     posts = db.relationship('Posts', back_populates='author')
@@ -40,7 +40,7 @@ class Subcategory(db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(60))
+    title = db.Column(db.String(64))
     body = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow, index=True)
 
