@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome to the BBS{% endblock %}
+
+{% block nav %}
+    <span>
+        {% for category in categories %}
+            <a href="{{url_for()}}">
+                {{category.name}}
+            </a>
+        {% endfor %}
+    </span>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
