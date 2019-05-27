@@ -5,7 +5,9 @@ cardinalion
 
 from flask import Flask
 
-from bluelog.extensions import db, csrf, ckeditor, toolbar
+from bbs.extensions import db, csrf, ckeditor, toolbar
+from bbs.models import User, Category
+from bbs.fakes import first_admin, some_categories
 
 def create_app(config_name=None):
     if config_name is None:
@@ -26,6 +28,8 @@ def create_app(config_name=None):
 
 def register_extensions(app):
     db.init_app(app)
+    initilize_db()
+
     ckeditor.init_app(app)
 
 def register_blueprints(app):
@@ -38,9 +42,20 @@ def register_shell_context(app):
         return dict(db=db)
 
 def register_template_context(app):
-    pass
+    @app.context_processor
+    def make_template_context():
+        admin = User.query.first()
+        categories = Category.query.order_by(Category.id).all()
+        return dict(admin=admin, categories=categories)
 
 def register_errors(app):
     @app.errorhandler(400)
     def bad_request(e):
         return render_template('errors/400.html'), 400
+
+def initilize_db():
+    db.drop_all()
+    db.create_all()
+    first_admin()
+    some_categories()
+
