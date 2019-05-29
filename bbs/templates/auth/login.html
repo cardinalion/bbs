@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <h1>Log in</h1>
+    <div class="row h-100 justify-content-center align-items-center">
+        {{ render_form(form, extra_classes='col-6') }}
+    </div>
+{% endblock %}
